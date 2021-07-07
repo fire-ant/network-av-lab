@@ -1,0 +1,6 @@
+---
+
+- name: enable jumbo frames
+  ios_command:
+    commands: 
+      - port jumbo-frame

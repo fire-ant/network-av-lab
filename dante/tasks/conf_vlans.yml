@@ -1,0 +1,24 @@
+---
+
+- name: Gather VLAN information as structured data
+  ios_facts:
+    gather_subset:
+    - '!all'
+    - '!min'
+    gather_network_resources:
+    - 'vlans'
+
+- name: create vlan configuration
+  cisco.ios.ios_vlans:
+    config: "{{ hostvars[inventory_hostname]['vlans'] }}"
+
+- name: configure vlans on ports
+  ios_command:
+    commands:
+      - configure
+      - "interface {{ item.name }}"
+      - "switchport mode {{ item.mode }}"
+      - "switchport {{ item.mode }} {{ item.mode is eq 'trunk' | ternary('allowed vlan add vlan-list', 'vlan') }} {{ item.vlan_tags }} "
+      - no shut
+      - end
+  loop: "{{ hostvars[inventory_hostname]['interfaces'] }}"

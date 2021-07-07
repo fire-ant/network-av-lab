@@ -1,0 +1,33 @@
+---
+
+- name: configure igmp globally
+  ios_command:
+    commands: 
+      - configure
+      - ip igmp snooping
+      - ip igmp snooping querier
+      - end
+
+- name: configure igmp snooping per vlan
+  ios_command:
+    commands:
+      - configure
+      - "ip igmp snooping vlan {{ item.vlan_id }}"
+      - "ip igmp snooping vlan {{ item.vlan_id }} mrouter learn pim-dvmrp"
+      - "ip igmp snooping vlan {{ item.vlan_id }} immediate leave"
+      - "interface vlan {{ item.vlan_id }}"
+      - end
+  loop: "{{ hostvars[inventory_hostname]['igmp'] }}"
+  when: item.igmp_snooping | bool
+
+- name: configure igmp querier per vlan
+  ios_command:
+    commands:
+      - configure
+      - "ip igmp snooping vlan {{ item.vlan_id }} querier"
+      - "ip igmp snooping vlan {{ item.vlan_id }} querier version {{ item.igmp_querier_version }}"
+      - "ip igmp snooping vlan {{ item.vlan_id }} querier address {{ item.igmp_querier_address }}"
+      - end
+
+  loop: "{{ hostvars[inventory_hostname]['igmp'] }}"
+  when: item.igmp_snooping | bool

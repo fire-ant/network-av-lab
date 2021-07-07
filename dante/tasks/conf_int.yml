@@ -1,0 +1,13 @@
+---
+
+- name: set up interfaces
+  ios_command:
+    commands:
+        - configure
+        - "interface {{ item.name }}"
+        - "speed  {{ item.speed }}"
+        - "duplex {{ item.duplex }}"
+        - "description {{ item.description }}"
+        - "{{ item.enabled | ternary('no shutdown', 'shutdown') }}"
+        - end
+  loop: "{{ hostvars[inventory_hostname]['interfaces'] }}"

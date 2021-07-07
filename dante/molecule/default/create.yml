@@ -1,0 +1,23 @@
+---
+- name: Create
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  no_log: "{{ molecule_no_log }}"
+  
+  vars:
+    molecule_instance_config: .cache/molecule/dante/default/instance_config.yml 
+  
+  tasks:
+    - name: Dump instance config
+      copy:
+        content: |
+          # Molecule managed
+
+          instance: cisco
+          address: 192.168.0.98
+          user: admin
+          port: 22
+          identity_file: ~/.ssh/net_id_rsa 
+
+        dest: "{{ molecule_instance_config }}"

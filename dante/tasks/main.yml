@@ -1,0 +1,76 @@
+---
+# tasks file for dante
+
+# set system mode
+
+- name: set system mode
+  include: system.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+# configure hostname
+
+- name: configure_hostname
+  include: conf_hostname.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+#  should probably do something about the  NTP/DNS/Syslog config here
+
+#  configure interfaces
+
+- name: configure_interfaces
+  include: conf_int.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+# configure vlans
+
+- name: configure_vlans
+  include: conf_vlans.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+# =====================================================
+
+# Jumbo frames
+
+- name: enable jumbo frames
+  include: jumbo_frame.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+# configure no eee / no green-ethernet
+
+- name: disable eee and green ethernet
+  include: eee_no_enable.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+# GLobal IGMP Snooping and per vlan IGMP configuration
+
+- name: enable igmp snooping
+  include: igmp.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+# Setup QoS to prioritize PTP (Dante clock messages)
+
+- name: enable qos and use DSCP markers
+  include: qos_dscp.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+#  show running config
+
+- name: show run
+  include: show_run.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'
+
+#  save the running config to startup
+
+- name: save_config
+  include: save_config.yml
+  connection: network_cli
+  when: ansible_network_os == 'cisco.ios.ios'

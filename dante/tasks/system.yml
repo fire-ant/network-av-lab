@@ -1,0 +1,8 @@
+---
+
+- name: set system mode
+  ios_command:
+    commands: 
+      - command: "set system mode {{ hostvars[inventory_hostname]['system_mode'] }}"
+        prompt: "^.*?"
+        answer: "Y"

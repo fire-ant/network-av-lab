@@ -1,0 +1,11 @@
+---
+# handlers file for dante
+
+- name: save_config
+  ios_command:
+    commands: copy running-config startup-config
+    prompt:
+      - "Overwrite file [startup-config].... (Y/N)[N] ?"
+    answer: 
+      - "Y"
+  listen: "save config"
