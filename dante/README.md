@@ -1,4 +1,4 @@
-Role Name
+Dante
 =========
 
 A role to apply some basic configuration to Cisco SG300 (And eventually other types of switch) to ensure that they are capable of supporting Dante Audio Network devices.
