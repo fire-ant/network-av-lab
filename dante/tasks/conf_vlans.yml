@@ -18,7 +18,7 @@
       - configure
       - "interface {{ item.name }}"
       - "switchport mode {{ item.mode }}"
-      - "switchport {{ item.mode }} {{ item.mode is eq 'trunk' | ternary('allowed vlan add vlan-list', 'vlan') }} {{ item.vlan_tags }} "
+      - "switchport {{ item.mode }} {{ item.mode is eq 'trunk' | ternary('allowed vlan add', 'vlan') }} {{ item.vlan_tags }} "
       - no shut
       - end
   loop: "{{ hostvars[inventory_hostname]['interfaces'] }}"
