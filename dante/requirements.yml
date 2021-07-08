@@ -1,0 +1,4 @@
+---
+collections:
+  - name: community.ciscosmb
+    version: 1.0.0

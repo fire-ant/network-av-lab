@@ -1,7 +1,7 @@
 ---
 
 - name: no enable eee / green-ethernet
-  ansible.netcommon.cli_command:
+  cli_command:
     command: "{{ item }}"
   loop:
     - configure 

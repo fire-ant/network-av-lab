@@ -1,19 +1,30 @@
 ---
 # tasks file for dante
 
+# gather facts using ciscosmb
+
+- name: gather facts about cisco switches
+  include: gather_facts.yml
+  connection: network_cli
+  when: ansible_network_os == 'community.ciscosmb.ciscosmb'
+
 # set system mode
 
 - name: set system mode
   include: system.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
+
+#  set banner
+
+- name: set login banner
+  include: banner.yml
+  connection: network_cli
 
 # configure hostname
 
 - name: configure_hostname
   include: conf_hostname.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
 
 #  should probably do something about the  NTP/DNS/Syslog config here
 
@@ -22,14 +33,13 @@
 - name: configure_interfaces
   include: conf_int.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
 
 # configure vlans
 
 - name: configure_vlans
   include: conf_vlans.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
+  when: ansible_network_os == 'community.ciscosmb.ciscosmb'
 
 # =====================================================
 
@@ -38,39 +48,39 @@
 - name: enable jumbo frames
   include: jumbo_frame.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
+  when: ansible_network_os == 'community.ciscosmb.ciscosmb'
 
 # configure no eee / no green-ethernet
 
 - name: disable eee and green ethernet
   include: eee_no_enable.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
+  when: ansible_network_os == 'community.ciscosmb.ciscosmb'
 
 # GLobal IGMP Snooping and per vlan IGMP configuration
 
 - name: enable igmp snooping
   include: igmp.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
+  when: ansible_network_os == 'community.ciscosmb.ciscosmb'
 
 # Setup QoS to prioritize PTP (Dante clock messages)
 
 - name: enable qos and use DSCP markers
   include: qos_dscp.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
+  when: ansible_network_os == 'community.ciscosmb.ciscosmb'
 
 #  show running config
 
 - name: show run
   include: show_run.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
+  when: ansible_network_os == 'community.ciscosmb.ciscosmb'
 
 #  save the running config to startup
 
 - name: save_config
   include: save_config.yml
   connection: network_cli
-  when: ansible_network_os == 'cisco.ios.ios'
+  when: ansible_network_os == 'community.ciscosmb.ciscosmb'

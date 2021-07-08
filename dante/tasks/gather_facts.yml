@@ -1,0 +1,53 @@
+---
+
+- name: Gather configuration facts
+  community.ciscosmb.facts:
+    gather_subset:
+      - config
+  timeout: 60
+  register: con_out
+
+- name: Create host configuration directory
+  local_action: 
+    module: file
+    path: "{{ role_path }}/{{ configs_dir }}/{{ inventory_hostname }}" 
+    state: directory
+  run_once: true
+  check_mode: no
+  changed_when: no
+
+- name: Save running config
+  local_action: 
+    module: copy 
+    content: "{{ con_out | to_nice_yaml }}"
+    dest: "{{ role_path }}/{{ configs_dir }}/{{ inventory_hostname }}/config.json"
+
+- name: Gather interface facts
+  community.ciscosmb.facts:
+    gather_subset:
+      - interfaces
+  register: int_out
+
+
+- name: Save interface state files
+  local_action: 
+    module: copy 
+    content: "{{ int_out | to_nice_yaml }}"
+    dest: "{{ role_path }}/{{ configs_dir }}/{{ inventory_hostname }}/interfaces.json"
+
+
+- name: Gather VLAN information as structured data
+  ios_facts:
+    gather_subset:
+    - '!all'
+    - '!min'
+    gather_network_resources:
+    - 'vlans'
+  register: vlans_out
+
+- name: Save VLAN state files
+  local_action: 
+    module: copy 
+    content: "{{ vlans_out | to_nice_yaml }}"
+    dest: "{{ role_path }}/{{ configs_dir }}/{{ inventory_hostname }}/vlans.json"
+

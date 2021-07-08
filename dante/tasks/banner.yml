@@ -1,0 +1,5 @@
+---
+
+- name: Update login banner
+  cli_command:
+    command: "banner login # You are logged into $(hostname) / $(mac-address) - this is an Ansible managed device #"

@@ -1,8 +1,8 @@
 ---
 
 - name: enable qos and configure dscp
-  ios_command:
-    commands: 
+  cli_command:
+    command: 
       - qos trust dscp
       - qos advanced-mode trust dscp
       - qos map dscp-queue 0 1 2 3 4 6 7 8 9 10 11 12 13 14 15 to 1

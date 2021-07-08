@@ -1,8 +1,7 @@
 ---
 
 - name: save_config
-  ios_command:
-    commands: 
-    - command: "copy running-config startup-config"
-      prompt: "^.*?"
-      answer: "Y"
+  cli_command:
+    command: "copy running-config startup-config"
+    prompt: "^.*?"
+    answer: "Y"

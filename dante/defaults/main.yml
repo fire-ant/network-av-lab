@@ -1,2 +1,40 @@
 ---
 # defaults file for dante
+
+system_mode: switch
+vlans: []
+  # - name: oneone 
+  #   vlan_id: 11
+  #   state: active
+  #   shutdown: disabled
+  # - name: twotwo
+  #   vlan_id: 22
+  #   state: active
+  #   shutdown: disabled
+  # - name: tritri 
+  #   vlan_id: 33
+  #   state: active
+  #   shutdown: disabled
+interfaces: []
+  # - name: GE2
+  #   speed: 1000
+  #   duplex: full
+  #   enabled: True
+  #   description: gigeth2
+  #   mode: access
+  #   vlan_tags: 22
+  # - name: GE3
+  #   speed: 1000
+  #   duplex: full
+  #   enabled: True
+  #   description: gigeth3
+  #   mode: trunk
+  #   vlan_tags: 22,33
+igmp: []
+  # - vlan_id: 33
+  #   igmp_snooping: True
+  #   igmp_querier_version: 3
+  #   igmp_querier_address: 192.168.100.100
+
+configs_dir: configs
+int_dir: interfaces

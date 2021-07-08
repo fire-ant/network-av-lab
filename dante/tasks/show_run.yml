@@ -1,7 +1,7 @@
 ---
 
 - name:  
-  ansible.netcommon.cli_command:
+  cli_command:
     command: show running-config
   register: show_run
 

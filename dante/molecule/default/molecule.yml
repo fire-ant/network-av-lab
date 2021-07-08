@@ -12,13 +12,17 @@ platforms:
   - name: cisco
 provisioner:
   name: ansible
+  # equivalent of settings in ansible.cfg
   config_options:
     defaults:
+      ansible_buffer_read_timeout: 2
+      command_timeout: 60
       stdout_callback: yaml
   inventory:
     host_vars:
       cisco:
-        ansible_network_os: cisco.ios.ios 
+        connection: network_cli
+        ansible_network_os: community.ciscosmb.ciscosmb
         system_mode: switch
         vlans:
           - name: oneone 
@@ -39,15 +43,15 @@ provisioner:
             duplex: full
             enabled: True
             description: gigeth2
-            mode: access
-            vlan_tags: 22
+            mode: trunk
+            vlan_tags: 1
           - name: GE3
             speed: 1000
             duplex: full
             enabled: True
             description: gigeth3
             mode: trunk
-            vlan_tags: 22,33
+            vlan_tags: 11,22,33
         igmp:
           - vlan_id: 33
             igmp_snooping: True

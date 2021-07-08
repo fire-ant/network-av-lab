@@ -1,8 +1,9 @@
 
 
 - name: configure hostname
-  ios_command:
-    commands: 
-      - configure
-      - "hostname {{ inventory_hostname }}"
-      - end
+  cli_command:
+    command: "{{ item }}"
+  loop:
+    - configure
+    - "hostname {{ inventory_hostname }}"
+    - end
